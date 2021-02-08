@@ -1,7 +1,7 @@
 # Head Soccer
   # Two player soccer game using pygame.
   
-  import pygame
+import pygame
 import sys
 from pygame.locals import *
 import time
@@ -11,7 +11,7 @@ pygame.init()
 p1won = 0
 p2won = 0
 
-#Naming the game.
+# Naming the game.
 pygame.display.set_caption("Head Soccer")
 
 width = 1200
@@ -19,22 +19,22 @@ height =700
 
 ground = pygame.display.set_mode((width, height))
 
-#Font sizes.
+# Font sizes.
 smallfont = pygame.font.SysFont("comicsansms",  25)
 medfont = pygame.font.SysFont("comicsansms", 50)
 largefont = pygame.font.SysFont("comicsansms", 80)
 
-#Colours
+# Colours
 black = (0,0,0)
 red = (255,0,0)
 green =(0,255,0)
 blue = (56, 123, 255)
 
-#Round won messages.
+# Round won messages.
 p1_scores = medfont.render("Player 1 scores !", True, red)
 p2_scores = medfont.render("Player 2 scores !", True, red)
 
-#Importing images for players, football, field
+# Importing images for players, football, field
 character_1 = pygame.image.load("P1.png").convert()
 character_2 = pygame.image.load("P2.png").convert()
 ball = pygame.image.load("football.jpeg").convert()
@@ -57,29 +57,29 @@ character_2_Area = character_2.get_rect()
 post_1_Area = post1.get_rect()
 post_2_Area = post2.get_rect()
 
-#Defining the starting point of the ball
+# Defining the starting point of the ball
 ballArea.left= 600
 ballArea.top= 350
 
-#Starting point of player 1
+# Starting point of player 1
 character_1_Area.left = 160
 character_1_Area.top = 280
 
-#Starting point of player 2
+# Starting point of player 2
 character_2_Area.left = 1033
 character_2_Area.top = 280
 
-#Location of post 1
+# Location of post 1
 post_1_Area.left = 35
 post_1_Area.top = 257
 
-#Location of post 2
+# Location of post 2
 post_2_Area.left = 1100
 post_2_Area.top = 257
 
 speed = [1,1]
 
-#Creating scoreboard
+# Creating scoreboard
 board1 = smallfont.render("Player 1 : " + str(p1won), True, black, blue)
 board2 = smallfont.render("Player 2 : " + str(p2won), True, black, blue)
 
@@ -114,7 +114,7 @@ def ball_exit():
         speed[1] = -speed[1]
 
 def ball_collision():
- #player 1 and ball collision
+ # player 1 and ball collision
     if character_1_Area.colliderect (ballArea):
         if character_1_Area.colliderect(ballArea.move(-speed[0],0)):
             speed[1] = -speed[1]
@@ -129,7 +129,7 @@ def ball_collision():
             speed[0] = -speed[0]
 
 def goal():
-    #Scoring a goal for player 2
+# Scoring a goal for player 2
     if post_1_Area.colliderect(ballArea):
         if post_1_Area.colliderect(ballArea.move(-speed[0],0)):
             speed[1] = -speed[1]
@@ -138,7 +138,7 @@ def goal():
         if post_1_Area.colliderect(ballArea.move(0, speed[1])):
             speed[0] = -speed[0]
 
-    #Scoring a goal for player 1
+# Scoring a goal for player 1
     if post_2_Area.colliderect(ballArea):
         if post_2_Area.colliderect(ballArea.move(-speed[0],0)):
             speed[1] = -speed[1]
@@ -147,7 +147,7 @@ def goal():
             speed[0] = -speed[0]
 
 def player_exit():
-#Player 1 screen exit prevention.
+# Player 1 screen exit prevention.
     if character_1_Area.left > width:
         character_1_Area.right = 0
 
@@ -160,7 +160,7 @@ def player_exit():
     if character_1_Area.bottom < 0:
         character_1_Area.top = height
 
-#Player 2 screen exit prevention.
+# Player 2 screen exit prevention.
     if character_2_Area.left > width:
         character_2_Area.right = 0
 
@@ -175,21 +175,21 @@ def player_exit():
 
 def p2_score_count():
     if post_1_Area.colliderect(ballArea):
-#        p2won += 1
+#p2won += 1
         ground.blit(p2_scores, [450,190])
         pygame.display.update()
         pygame.time.wait(2000)
 
-#        return(p2won)
+#return(p2won)
 
 def p1_score_count():
     if post_2_Area.colliderect(ballArea):
-#        p1won += 1
+#p1won += 1
         ground.blit(p1_scores, [450,190])
         pygame.display.update()
         pygame.time.wait(2000)
 
-#        return(p1won)
+#return(p1won)
 
 def playgame():
 
@@ -220,7 +220,7 @@ def playgame():
             #    pygame.quit()
             #    sys.exit()
 
-#Updating background
+# Updating background
         ground.blit(background, [0,0])
         ground.blit(post1, post_1_Area)
         ground.blit(post2, post_2_Area)
