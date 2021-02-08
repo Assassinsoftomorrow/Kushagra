@@ -41,7 +41,6 @@ ball = pygame.image.load("football.jpeg").convert()
 background = pygame.image.load("football field.jpg").convert()
 post1 = pygame.image.load("post.jpg").convert()
 post2 = pygame.image.load("post2.jpg").convert()
-
 ground.blit(ball, [0,0])
 ground.blit(background, [0,0])
 ground.blit(character_1, [0,0])
@@ -78,11 +77,7 @@ post_2_Area.left = 1100
 post_2_Area.top = 257
 
 speed = [1,1]
-
-# Creating scoreboard
-board1 = smallfont.render("Player 1 : " + str(p1won), True, black, blue)
-board2 = smallfont.render("Player 2 : " + str(p2won), True, black, blue)
-
+    
 def player_1_move():
     keystroke = pygame.key.get_pressed()
 
@@ -173,36 +168,35 @@ def player_exit():
     if character_2_Area.bottom < 0:
         character_2_Area.top = height
 
-def p2_score_count():
-    if post_1_Area.colliderect(ballArea):
-#p2won += 1
-        ground.blit(p2_scores, [450,190])
-        pygame.display.update()
-        pygame.time.wait(2000)
-
-#return(p2won)
-
-def p1_score_count():
-    if post_2_Area.colliderect(ballArea):
-#p1won += 1
-        ground.blit(p1_scores, [450,190])
-        pygame.display.update()
-        pygame.time.wait(2000)
-
-#return(p1won)
-
 def playgame():
+    
+    global p1won
+    global p2won
 
     while True:
+        
+# Score counting for player 1
+        if post_2_Area.colliderect(ballArea):
+            p1won += 1
+            ground.blit(p1_scores, [450,190])
+            pygame.display.update()
+            pygame.time.wait(2000)
+            
+ # Score counting for player 2
+        if post_1_Area.colliderect(ballArea):
+            p2won += 1
+            ground.blit(p2_scores, [450,190])
+            pygame.display.update()
+            pygame.time.wait(2000)
 
+# Creating scoreboard
+        board1 = smallfont.render("Player 1 : " + str(p1won), True, black, blue)
+        board2 = smallfont.render("Player 2 : " + str(p2won), True, black, blue)
+            
         ballArea.move_ip(speed)
 
         ball_exit()
         goal()
-        #p1won =
-        p1_score_count()
-        #p2won =
-        p2_score_count()
         ball_collision()
         player_1_move()
         player_2_move()
@@ -216,20 +210,25 @@ def playgame():
                 if action.key == K_ESCAPE:
                     pygame.quit()
                     sys.exit()
-           # if  p1won == 7 or p2won ==7:
-            #    pygame.quit()
-            #    sys.exit()
+            if  (p1won >= 3):
+                pygame.quit()
+                sys.exit()
+                
+            if (p2won >=3):
+                pygame.quit()
+                sys.exit()
 
 # Updating background
         ground.blit(background, [0,0])
         ground.blit(post1, post_1_Area)
         ground.blit(post2, post_2_Area)
         ground.blit(character_1, character_1_Area)
-        ground.blit(character_2, character_2_Area)
+        ground.blit(character_2, character_2_Area)       
         ground.blit(board1, [50,0])
         ground.blit(board2, [1000,0])
         ground.blit(ball, ballArea)
 
+        pygame.display.update()
         pygame.display.flip()
 
 playgame()
