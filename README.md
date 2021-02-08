@@ -1,2 +1,2 @@
-# Kushagra
+# Head Soccer
 soccer using pygame
